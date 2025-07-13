@@ -107,7 +107,7 @@ public class SpringSecurity {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/public/**").permitAll()
-                       .requestMatchers("/admin**").permitAll()//.hasRole("admin")
+                        .requestMatchers("/admin**").hasRole("admin")
                         .anyRequest().authenticated()
                 ).httpBasic(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable());
