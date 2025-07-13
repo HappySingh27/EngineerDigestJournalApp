@@ -107,6 +107,7 @@ public class SpringSecurity {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/public/**").permitAll()
+                       .requestMatchers("/admin**").permitAll()//.hasRole("admin")
                         .anyRequest().authenticated()
                 ).httpBasic(Customizer.withDefaults())
                 .csrf(csrf -> csrf.disable());
@@ -114,22 +115,30 @@ public class SpringSecurity {
         return http.build();
     }
 
-    //protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       // auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-      // Engineer Digest old one
-    //}
-
     /*
-    Picked from Spring security 6.1+
-    replacement of configure method which is old implementation
-    need to replace with below method in future
-    */
-
+     *
+     * AuthenticationManager Bean:
+     * - Exposes Spring Security's internal AuthenticationManager as a Spring Bean.
+     * - This allows other components (e.g., custom login controller or JWT filters) to use it manually.
+     * - Delegates authentication logic to the configured AuthenticationProvider.
+     * - Mandatory in Spring Security 6+ if you want to inject AuthenticationManager manually.
+     *
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    /*
+     *
+     * AuthenticationProvider Bean (DaoAuthenticationProvider):
+     * - Configures how user authentication should be performed.
+     * - Uses your custom UserDetailsService to load user details from the database.
+     * - Uses PasswordEncoder to compare raw and encoded passwords.
+     * - Without this bean, Spring may not know how to authenticate using your DB-stored users.
+     * - DaoAuthenticationProvider is commonly used for username/password-based login.
+     *
+     */
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();

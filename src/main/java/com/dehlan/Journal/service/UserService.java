@@ -26,7 +26,11 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     public void saveEntry(User user){
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (!user.getPassword().startsWith("$2a$")) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+
         user.setRoles(Arrays.asList("USER"));
         userRepository.save(user);
     }

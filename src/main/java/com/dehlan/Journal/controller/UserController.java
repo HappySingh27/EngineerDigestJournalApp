@@ -1,24 +1,13 @@
-
-//  Copied from JournalEntryController
-//  Methods Inside Controller are public, because they are used from outside
-
 package com.dehlan.Journal.controller;
 
-import com.dehlan.Journal.entity.JournalEntry;
 import com.dehlan.Journal.entity.User;
-import com.dehlan.Journal.service.JournalEntryService;
 import com.dehlan.Journal.service.UserService;
-import com.mongodb.MongoWriteException;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
