@@ -45,11 +45,52 @@ import java.util.List;
  */
 
 
-// will tell SpringBoot that this class is mapped with MongoDB collection ("journal_entries"))
-@Document(collection = "user")
-// equivalent to @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor
-@Data
+
+@Document(collection = "user") // will tell SpringBoot that this class is mapped with MongoDB collection ("journal_entries"))
+@Data // equivalent to @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor // this is needed for @Builder, - it needs all args constructor
+
+/*
+ * @Builder (Lombok)
+ * -----------------
+ * Lombok's @Builder annotation implements the Builder design pattern.
+ * It auto-generates:
+ *   - A static builder() method
+ *   - A nested builder class with setter-like methods
+ *   - A build() method to construct the object
+ */
+
+/*
+ * Problem Without Builder
+ * ------------------------
+ * Imagine a class with 100 fields.
+ * Without Builder pattern, you'd need:
+ *   - 100 overloaded constructors (1-arg, 2-arg, ..., 100-arg)
+ *   - Or one long constructor with 100 parameters (very hard to read, use, or maintain)
+ *
+ * Example:
+ * new Employee("John", null, null, ..., 100 args)  ❌ Very confusing and error-prone
+ *
+ * ✅ Solution: Use Builder Pattern
+ * -------------------------------
+ * With @Builder, you only set the fields you need using a fluent, readable style:
+ *
+ * Example:
+ * Employee emp = Employee.builder()
+ *                        .name("John")
+ *                        .department("IT")
+ *                        .salary(50000)
+ *                        // set only what you need
+ *                        .build();
+ *
+ * ✅ Benefits:
+ * - No need to write or maintain 100 constructors
+ * - Code is clean and readable
+ * - Reduces bugs from wrong argument order
+ * - Supports immutability
+ */
+@Builder
 public class User {
 
     @Id  // to make unique key in MongoDb

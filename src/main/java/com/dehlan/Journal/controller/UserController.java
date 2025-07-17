@@ -16,7 +16,7 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+/*
     @GetMapping()
     public ResponseEntity<?> getAll(){
          List<User> userList = userService.getAll();
@@ -26,6 +26,8 @@ public class UserController {
          }
          return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
+ */
 
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody User user){
