@@ -106,7 +106,7 @@ public class SpringSecurity {
 
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**").permitAll()
+                        .requestMatchers("/public/**","/health-check").permitAll()
                         .requestMatchers("/admin**").hasRole("admin")
                         .anyRequest().authenticated()
                 ).httpBasic(Customizer.withDefaults())

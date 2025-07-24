@@ -97,7 +97,7 @@ public class User {
     private ObjectId id;
 
     /*
-     * need to update property in application.properties file,
+     * need to update property in application.yml file,
      * spring.data.mongodb.auto-index-creation=true, otherwise
      * @Indexed would not work
      *

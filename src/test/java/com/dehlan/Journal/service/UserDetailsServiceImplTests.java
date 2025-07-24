@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import com.dehlan.Journal.entity.User;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
@@ -56,7 +58,7 @@ import static org.mockito.Mockito.when;
  *
  */
 
-
+//@ActiveProfiles("") - name of profile we want to use for tests can be passed here.
 public class UserDetailsServiceImplTests {
 
     @InjectMocks

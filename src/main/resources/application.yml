@@ -1,0 +1,6 @@
+#common properties of all profiles can be written in application.yml
+
+spring:
+  profiles: # notice this is plural (profiles), hence we can give multiple profiles
+    active: dev #this prop can also be set using command line argument
+                # we can give multiple comma separated profiles here

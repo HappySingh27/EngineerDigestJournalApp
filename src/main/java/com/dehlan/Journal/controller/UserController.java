@@ -2,6 +2,7 @@ package com.dehlan.Journal.controller;
 
 import com.dehlan.Journal.entity.User;
 import com.dehlan.Journal.service.UserService;
+import com.dehlan.Journal.service.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,18 +17,16 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-/*
-    @GetMapping()
-    public ResponseEntity<?> getAll(){
-         List<User> userList = userService.getAll();
+    @Autowired
+    private WeatherService weatherService;
 
-         if(userList!=null && !userList.isEmpty()){
-             return new ResponseEntity<>(userList, HttpStatus.OK);
-         }
-         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+    @GetMapping("/temperature")
+    public ResponseEntity<?> getUserTemp(){
+
+        int temp = weatherService.getTemperature();
+        return new ResponseEntity<>(temp,HttpStatus.OK);
     }
-
- */
 
     @PutMapping
     public ResponseEntity<?> updateUser(@RequestBody User user){

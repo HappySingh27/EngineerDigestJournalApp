@@ -31,6 +31,13 @@
 *  Interface - MogoDatabaseFactory - Helps in establishing connection with MongoDb
 *  implementation of MogoDatabaseFactory - SimpleMongoClientDatabaseFactory
 */
+/*
+* -Profiles-
+* mvn clean package -Dspring.profiles.active=dev - choosing profile while packaging through cmd
+* 	-D flag is used set JVM properties
+* if our project do not contains test then mvn clean package would also work - not tested
+* if a bean would be loaded or not can also be set through profile using @Profile("profile name") annotation
+* */
 
 
 
@@ -38,18 +45,29 @@ package com.dehlan.Journal;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+//@Profile("") - for properties/yml files
 @SpringBootApplication
 @EnableTransactionManagement
 public class MyFirstJournalApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(MyFirstJournalApplication.class, args);
+
+		/*
+		* Below code is to get current active profile,
+		* i.e application is using which properties or yml file
+		* */
+		ConfigurableApplicationContext context = SpringApplication.run(MyFirstJournalApplication.class, args);
+		ConfigurableEnvironment environment = context.getEnvironment();
+		System.out.println(environment.getActiveProfiles()[0]);
 	}
 
 	/*
