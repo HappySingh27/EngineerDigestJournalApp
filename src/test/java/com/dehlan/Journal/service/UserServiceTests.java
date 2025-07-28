@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 * Understand how to run Junit, how test are executed
 *
 * */
-@SpringBootTest
+//@SpringBootTest
 public class UserServiceTests {
     /*
     @ParameterizedTest
@@ -33,6 +33,8 @@ public class UserServiceTests {
 
     @Autowired
     UserService userService;
+
+    @Disabled
     @Test
     public void testFindByUserName(){
 

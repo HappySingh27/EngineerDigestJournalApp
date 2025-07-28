@@ -12,20 +12,6 @@ import lombok.Setter;
 @Setter
 public class WeatherResponse {
 
-    //Request
-    //location
-    //Current
-    // only above 3  classes needed
-
-
-    // avoid snake case use camel case -? @JSONProperty("")
-
-
-    // import com.fasterxml.jackson.databind.ObjectMapper; // version 2.11.1
-// import com.fasterxml.jackson.annotation.JsonProperty; // version 2.11.1
-/* ObjectMapper om = new ObjectMapper();
-Root root = om.readValue(myJsonString, Root.class); */
-
     public Current current;
 
     @Data
@@ -34,7 +20,7 @@ Root root = om.readValue(myJsonString, Root.class); */
     @Setter
     public class Current{
 
-        @JsonProperty("observation_time")
+        @JsonProperty("observation_time") // observation_time - name of field in jsonResponse, we are updating name to onservationTime to avoid snake_Case
         public String observationTime;
         public int temperature;
         public int feelslike;

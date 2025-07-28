@@ -5,6 +5,20 @@ spring:
       database: journaldb
       auto-index-creation: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: happesingh27@gmail.com
+    password: zfpl mtps ahtq nkvs
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    protocol: smtp
+
+
 server:
   port: 8080
   #servlet:
@@ -19,3 +33,7 @@ logging:
         # research and study more about it and update these notes
         # same can be done using .properties or xml file
         # we would use separate xml file for logs, for cleaner folder structure
+
+weather:
+  api:
+    key: a2489b6541ed95105459dce2faeb4d35

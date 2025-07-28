@@ -30,7 +30,7 @@ import java.util.List;
  * - src/      → target directory to begin searching (typically your source folder)
  */
 @Slf4j // this annotation is part of lombok we do not need to create class we can directly log loggers
-@Component
+@Component // in service class we should @Service for better readability, but working of both(@Component,@Service) is same
 public class UserService {
 
 
