@@ -66,6 +66,46 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<!--
+  JJWT API
+  🔹 Definition: Core interfaces and classes for working with JWTs (e.g., JwtBuilder, JwtParser).
+  🔹 Purpose: Provides the contracts you use to create, sign, and parse JWTs in your code.
+  🔹 Use: Add this dependency to write code against the JJWT API without depending on implementation details.
+-->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+
+		<!--
+          JJWT Implementation
+          🔹 Definition: The actual implementation logic of the JJWT API (signing, verification, key handling).
+          🔹 Purpose: Provides runtime functionality behind the API interfaces.
+          🔹 Use: Required at runtime to actually generate and validate JWTs. Kept in runtime scope so your code doesn’t compile against internal classes.
+        -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+
+		<!--
+          JJWT JSON Serializer (Jackson)
+          🔹 Definition: Integration module that allows JJWT to use Jackson for converting JWT claims/payloads into JSON and back.
+          🔹 Purpose: JWT payloads are JSON, so a serializer is needed. This module plugs Jackson into JJWT.
+          🔹 Use: Required at runtime to handle serialization/deserialization of JWT bodies.
+                 Alternatives exist like jjwt-gson or jjwt-orgjson if you prefer another JSON library.
+        -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

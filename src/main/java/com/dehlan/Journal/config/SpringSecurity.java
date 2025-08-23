@@ -2,7 +2,7 @@
  * @EnableWebSecurity enables Spring Security's web security support
  * and registers the Spring Security filter chain used to secure HTTP requests.
  * It is required when you want to customize security behavior using SecurityFilterChain.
- * Internally, it loads WebSecurityConfiguration which sets up security filters.
+ * Internally, it loads WebSecurityConfiguration, which sets up security filters.
  *
  * SecurityFilterChain is a Spring bean that defines your custom security rules.
  * It tells Spring which requests to allow or restrict, and what kind of authentication is required.
@@ -77,6 +77,7 @@
 package com.dehlan.Journal.config;
 
 import com.dehlan.Journal.service.UserDetailsServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -90,10 +91,13 @@ import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SpringSecurity {
@@ -101,17 +105,22 @@ public class SpringSecurity {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
+    @Autowired
+    JwtAuthFilter jwtAuthFilter;
+
     @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
+        log.info("🔒 Configuring SecurityFilterChain...");
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/public/**","/health-check").permitAll()
+                        .requestMatchers("/public/**","/health-check","/auth/login").permitAll()
                         .requestMatchers("/admin**").hasRole("admin")
                         .anyRequest().authenticated()
-                ).httpBasic(Customizer.withDefaults())
-                .csrf(csrf -> csrf.disable());
-
+                )//.httpBasic(Customizer.withDefaults()) - Enables HTTP Basic authentication
+                .csrf(csrf -> csrf.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        log.info("✅ SecurityFilterChain configured successfully.");
         return http.build();
     }
 
@@ -132,7 +141,7 @@ public class SpringSecurity {
     /*
      *
      * AuthenticationProvider Bean (DaoAuthenticationProvider):
-     * - Configures how user authentication should be performed.
+     * - Configures, how user authentication should be performed.
      * - Uses your custom UserDetailsService to load user details from the database.
      * - Uses PasswordEncoder to compare raw and encoded passwords.
      * - Without this bean, Spring may not know how to authenticate using your DB-stored users.

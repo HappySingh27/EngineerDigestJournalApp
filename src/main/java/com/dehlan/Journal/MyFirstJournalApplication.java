@@ -43,6 +43,7 @@
 
 package com.dehlan.Journal;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -56,6 +57,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 //@Profile("") - for properties/yml files
+@Slf4j
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableScheduling
@@ -67,7 +69,9 @@ public class MyFirstJournalApplication {
 		* Below code is to get current active profile,
 		* i.e application is using which properties or yml file
 		* */
+		log.info("🚀 Starting Journal Application...");
 		ConfigurableApplicationContext context = SpringApplication.run(MyFirstJournalApplication.class, args);
+		log.info("✅ Journal Application started successfully.");
 		ConfigurableEnvironment environment = context.getEnvironment();
 		System.out.println(environment.getActiveProfiles()[0]);
 	}
